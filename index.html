@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#ec4899">
+    <title>Embrace & Empower - Breast Cancer Support</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRW1icmFjZSAmIEVtcG93ZXIiLCJzaG9ydF9uYW1lIjoiRSZFIFN1cHBvcnQiLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2ZmZmZmZiIsInRoZW1lX2NvbG9yIjoiI2VjNDg5OSIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQifQ==">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #fce7f3 0%, #f3e7fd 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 100%;
+            min-height: 100vh;
+            background: white;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 200;
+            overflow-y: auto;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-close {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-close button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            padding: 1rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 1rem;
+            color: #374151;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #f3f4f6;
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home View */
+        .hero {
+            padding: 2rem 1rem;
+            text-align: center;
+            background: white;
+        }
+
+        .hero h1 {
+            color: #ec4899;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 0 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #ec4899;
+            border: 2px solid #ec4899;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Features */
+        .features {
+            padding: 2rem 1rem;
+            background: #f9fafb;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Intake Form */
+        .intake-form {
+            padding: 1rem;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ec4899 0%, #a855f7 100%);
+            transition: width 0.3s ease;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            background: #f3f4f6;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-top: 0.125rem;
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .option-title {
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        .option-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* Form Navigation */
+        .form-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .form-nav button {
+            flex: 1;
+        }
+
+        /* Success Message */
+        .success-message {
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-text {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        /* Match Cards */
+        .match-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .match-card.recommended {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.75rem;
+        }
+
+        .match-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 1.125rem;
+        }
+
+        .match-score {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .match-details {
+            color: #6b7280;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .match-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: #f3f4f6;
+            color: #4b5563;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            padding: 0.5rem;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .bottom-nav-item.active {
+            color: #ec4899;
+        }
+
+        .bottom-nav-icon {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: absolute;
+            top: 1rem;
+            right: 3.5rem;
+        }
+
+        .language-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 3px solid #f3f4f6;
+            border-top-color: #ec4899;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 428px;
+                margin: 0 auto;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            }
+        }
+
+        /* PWA Install Prompt */
+        .install-prompt {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            left: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 300;
+        }
+
+        .install-prompt.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span>💗</span>
+                    <span>E&E Support</span>
+                </div>
+                <div class="language-selector">
+                    <select class="language-btn" onchange="changeLanguage(this.value)">
+                        <option value="en">EN</option>
+                        <option value="es">ES</option>
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+                <button class="menu-btn" onclick="toggleMenu()">☰</button>
+            </div>
+        </header>
+
+        <!-- Navigation Menu -->
+        <nav class="nav-menu" id="navMenu">
+            <div class="nav-close">
+                <button onclick="toggleMenu()">✕</button>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" onclick="showView('home'); toggleMenu()">Home</a>
+                <a href="#" class="nav-link" onclick="showView('about'); toggleMenu()">About Us</a>
+                <a href="#" class="nav-link" onclick="showView('resources'); toggleMenu()">Resources</a>
+                <a href="#" class="nav-link" onclick="showView('contact'); toggleMenu()">Contact</a>
+                <a href="tel:413-298-2116" class="nav-link">📞 Call Us</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="mainContent">
+            <!-- Home View -->
+            <div class="view active" id="homeView">
+                <div class="hero">
+                    <h1>Find Your Support Match</h1>
+                    <p>Connect with mentors who understand your breast cancer journey. We especially support BIPOC, LGBTQIA+, men, and rural communities.</p>
+                </div>
+                
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="startIntake('mentee')">
+                        I Need Support
+                    </button>
+                    <button class="btn btn-secondary" onclick="startIntake('mentor')">
+                        I Want to Help
+                    </button>
+                </div>
+
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <div class="feature-title">Personalized Matching</div>
+                        <div class="feature-description">Get matched with someone who truly understands your specific journey and identity</div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <div class="feature-title">Culturally Affirming</div>
+                        <div class="feature-description">Support that honors your cultural background and lived experience</div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-title">Safe & Confidential</div>
+                        <div class="feature-description">Your privacy is protected with HIPAA-compliant security</div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-title">Multiple Languages</div>
+                        <div class="feature-description">Support available in English, Spanish, and more</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intake Form View -->
+            <div class="view" id="intakeView">
+                <div class="intake-form">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar" style="width: 20%"></div>
+                    </div>
+                    
+                    <div id="formContent">
+                        <!-- Form content will be dynamically inserted here -->
+                    </div>
+                    
+                    <div class="form-nav">
+                        <button class="btn btn-secondary" onclick="previousStep()" id="backBtn">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="nextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success View -->
+            <div class="view" id="successView">
+                <div class="success-message">
+                    <div class="success-icon">✅</div>
+                    <h2 class="success-title">Application Received!</h2>
+                    <p class="success-text">We'll review your information and match you within 48 hours. Check your email for updates.</p>
+                    
+                    <div id="matchSuggestions">
+                        <!-- AI-suggested matches will appear here -->
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="showView('home')">Return Home</button>
+                </div>
+            </div>
+
+            <!-- About View -->
+            <div class="view" id="aboutView">
+                <div class="hero">
+                    <h1>About Embrace & Empower</h1>
+                    <p>We provide culturally sensitive, identity-affirming mentorship to individuals impacted by breast cancer, especially those from underrepresented communities.</p>
+                </div>
+                <div class="features">
+                    <div class="feature-card">
+                        <p>Our mission is to ensure no one navigates breast cancer alone, with special focus on BIPOC, LGBTQIA+, men, and rural communities who face unique challenges in their cancer journey.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources View -->
+            <div class="view" id="resourcesView">
+                <div class="hero">
+                    <h1>Resources</h1>
+                </div>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-title">Financial Assistance</div>
+                        <div class="feature-description">Programs to help with treatment costs</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">Transportation Support</div>
+                        <div class="feature-description">Help getting to appointments</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">Cultural Resources</div>
+                        <div class="feature-description">Culturally specific support materials</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact View -->
+            <div class="view" id="contactView">
+                <div class="hero">
+                    <h1>Contact Us</h1>
+                    <p>We're here to help</p>
+                </div>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-title">📞 Phone</div>
+                        <div class="feature-description">(413) 298-2116</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">✉️ Email</div>
+                        <div class="feature-description">support@embraceempower.org</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="bottom-nav-item active" onclick="showView('home')">
+                <div class="bottom-nav-icon">🏠</div>
+                <div>Home</div>
+            </div>
+            <div class="bottom-nav-item" onclick="startIntake('mentee')">
+                <div class="bottom-nav-icon">💗</div>
+                <div>Get Help</div>
+            </div>
+            <div class="bottom-nav-item" onclick="showView('resources')">
+                <div class="bottom-nav-icon">📚</div>
+                <div>Resources</div>
+            </div>
+            <div class="bottom-nav-item" onclick="showView('contact')">
+                <div class="bottom-nav-icon">💬</div>
+                <div>Contact</div>
+            </div>
+        </nav>
+
+        <!-- PWA Install Prompt -->
+        <div class="install-prompt" id="installPrompt">
+            <p style="font-weight: 600; margin-bottom: 0.5rem;">Add to Home Screen</p>
+            <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem;">Install our app for quick access to support</p>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary" onclick="hideInstallPrompt()" style="flex: 1; padding: 0.5rem;">Later</button>
+                <button class="btn btn-primary" onclick="installApp()" style="flex: 1; padding: 0.5rem;">Install</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // App State
+        let currentView = 'home';
+        let intakeType = '';
+        let currentStep = 0;
+        let formData = {};
+        let deferredPrompt;
+
+        // Form Steps for Mentees
+        const menteeSteps = [
+            {
+                title: "Let's Get Started",
+                fields: [
+                    {
+                        type: 'radio',
+                        name: 'connection',
+                        label: 'Your connection to breast cancer:',
+                        required: true,
+                        options: [
+                            { value: 'patient', label: 'Current Patient' },
+                            { value: 'survivor', label: 'Survivor' },
+                            { value: 'caregiver', label: 'Caregiver' },
+                            { value: 'previvor', label: 'High Risk (Previvor)' }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "About You",
+                fields: [
+                    {
+                        type: 'text',
+                        name: 'firstName',
+                        label: 'First Name (or nickname)',
+                        placeholder: 'How should we call you?',
+                        required: true
+                    },
+                    {
+                        type: 'email',
+                        name: 'email',
+                        label: 'Email Address',
+                        placeholder: 'your@email.com',
+                        required: true
+                    },
+                    {
+                        type: 'text',
+                        name: 'pronouns',
+                        label: 'Pronouns (optional)',
+                        placeholder: 'she/her, he/him, they/them, etc.'
+                    }
+                ]
+            },
+            {
+                title: "Your Location",
+                fields: [
+                    {
+                        type: 'select',
+                        name: 'location',
+                        label: 'Where are you located?',
+                        required: true,
+                        options: ['Urban/City', 'Suburban', 'Rural/Remote', 'Military Base', 'Reservation']
+                    },
+                    {
+                        type: 'text',
+                        name: 'zipcode',
+                        label: 'ZIP Code (for resources)',
+                        placeholder: '12345'
+                    }
+                ]
+            },
+            {
+                title: "Support Needs",
+                fields: [
+                    {
+                        type: 'checkbox',
+                        name: 'needs',
+                        label: 'What support do you need? (select all that apply)',
+                        options: [
+                            'Emotional support',
+                            'Treatment decisions',
+                            'Financial resources',
+                            'Transportation help',
+                            'Cultural understanding',
+                            'LGBTQIA+ affirmation',
+                            'Language support',
+                            'Rural health navigation'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Mentor Preferences",
+                fields: [
+                    {
+                        type: 'checkbox',
+                        name: 'preferences',
+                        label: 'Important mentor qualities (select up to 3)',
+                        options: [
+                            'Same diagnosis',
+                            'Similar age',
+                            'Cultural match',
+                            'LGBTQIA+ identity',
+                            'Rural experience',
+                            'Language match',
+                            'Parent/caregiver',
+                            'Professional background'
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Form Steps for Mentors
+        const mentorSteps = [
+            {
+                title: "Thank You for Helping!",
+                fields: [
+                    {
+                        type: 'text',
+                        name: 'fullName',
+                        label: 'Full Name',
+                        required: true
+                    },
+                    {
+                        type: 'email',
+                        name: 'email',
+                        label: 'Email Address',
+                        required: true
+                    },
+                    {
+                        type: 'tel',
+                        name: 'phone',
+                        label: 'Phone Number',
+                        required: true
+                    }
+                ]
+            },
+            {
+                title: "Your Experience",
+                fields: [
+                    {
+                        type: 'select',
+                        name: 'journey',
+                        label: 'Your breast cancer journey:',
+                        required: true,
+                        options: [
+                            'Survivor (completed treatment)',
+                            'Current patient',
+                            'Caregiver/loved one',
+                            'Previvor'
+                        ]
+                    },
+                    {
+                        type: 'textarea',
+                        name: 'story',
+                        label: 'Briefly share your journey',
+                        placeholder: 'Your experience in a few sentences...',
+                        required: true
+                    }
+                ]
+            },
+            {
+                title: "How You Can Help",
+                fields: [
+                    {
+                        type: 'checkbox',
+                        name: 'support',
+                        label: 'Areas you can support:',
+                        options: [
+                            'Newly diagnosed',
+                            'Treatment decisions',
+                            'Surgery recovery',
+                            'Chemo/radiation',
+                            'Emotional support',
+                            'Work balance',
+                            'Family issues',
+                            'Cultural needs',
+                            'LGBTQIA+ support',
+                            'Male breast cancer',
+                            'Rural challenges'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Your Availability",
+                fields: [
+                    {
+                        type: 'select',
+                        name: 'mentees',
+                        label: 'How many mentees can you support?',
+                        required: true,
+                        options: ['1', '2', '3', '4-5']
+                    },
+                    {
+                        type: 'select',
+                        name: 'commitment',
+                        label: 'Time commitment per week:',
+                        required: true,
+                        options: ['1-2 hours', '2-4 hours', '4+ hours']
+                    }
+                ]
+            }
+        ];
+
+        // Navigation Functions
+        function showView(viewName) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewName + 'View').classList.add('active');
+            currentView = viewName;
+            updateBottomNav();
+        }
+
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        function updateBottomNav() {
+            document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            if (currentView === 'home') {
+                document.querySelector('.bottom-nav-item').classList.add('active');
+            }
+        }
+
+        // Intake Form Functions
+        function startIntake(type) {
+            intakeType = type;
+            currentStep = 0;
+            formData = {};
+            showView('intake');
+            renderStep();
+        }
+
+        function renderStep() {
+            const steps = intakeType === 'mentor' ? mentorSteps : menteeSteps;
+            const step = steps[currentStep];
+            
+            // Update progress bar
+            const progress = ((currentStep + 1) / steps.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Update navigation buttons
+            document.getElementById('backBtn').style.display = currentStep === 0 ? 'none' : 'block';
+            document.getElementById('nextBtn').textContent = currentStep === steps.length - 1 ? 'Submit' : 'Next';
+            
+            // Render form content
+            let html = `<h2 style="color: #1f2937; margin-bottom: 1.5rem;">${step.title}</h2>`;
+            
+            step.fields.forEach(field => {
+                html += '<div class="form-group">';
+                
+                if (field.type === 'text' || field.type === 'email' || field.type === 'tel') {
+                    html += `
+                        <label class="form-label">${field.label}</label>
+                        <input type="${field.type}" 
+                               class="form-input" 
+                               id="${field.name}"
+                               placeholder="${field.placeholder || ''}"
+                               value="${formData[field.name] || ''}"
+                               ${field.required ? 'required' : ''}>
+                    `;
+                } else if (field.type === 'select') {
+                    html += `
+                        <label class="form-label">${field.label}</label>
+                        <select class="form-select" id="${field.name}" ${field.required ? 'required' : ''}>
+                            <option value="">Select...</option>
+                            ${field.options.map(opt => 
+                                `<option value="${opt}" ${formData[field.name] === opt ? 'selected' : ''}>${opt}</option>`
+                            ).join('')}
+                        </select>
+                    `;
+                } else if (field.type === 'textarea') {
+                    html += `
+                        <label class="form-label">${field.label}</label>
+                        <textarea class="form-textarea" 
+                                  id="${field.name}"
+                                  placeholder="${field.placeholder || ''}"
+                                  ${field.required ? 'required' : ''}>${formData[field.name] || ''}</textarea>
+                    `;
+                } else if (field.type === 'radio') {
+                    html += `<label class="form-label">${field.label}</label>`;
+                    html += '<div class="radio-group">';
+                    field.options.forEach(opt => {
+                        const checked = formData[field.name] === opt.value ? 'checked' : '';
+                        html += `
+                            <div class="radio-option">
+                                <input type="radio" 
+                                       name="${field.name}" 
+                                       id="${field.name}_${opt.value}"
+                                       value="${opt.value}"
+                                       ${checked}>
+                                <label for="${field.name}_${opt.value}" class="option-label">
+                                    <div class="option-title">${opt.label}</div>
+                                </label>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                } else if (field.type === 'checkbox') {
+                    html += `<label class="form-label">${field.label}</label>`;
+                    html += '<div class="checkbox-group">';
+                    const selectedValues = formData[field.name] || [];
+                    field.options.forEach(opt => {
+                        const checked = selectedValues.includes(opt) ? 'checked' : '';
+                        html += `
+                            <div class="checkbox-option">
+                                <input type="checkbox" 
+                                       id="${field.name}_${opt}"
+                                       value="${opt}"
+                                       ${checked}>
+                                <label for="${field.name}_${opt}" class="option-label">
+                                    <div class="option-title">${opt}</div>
+                                </label>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                }
+                
+                html += '</div>';
+            });
+            
+            document.getElementById('formContent').innerHTML = html;
+        }
+
+        function saveStepData() {
+            const steps = intakeType === 'mentor' ? mentorSteps : menteeSteps;
+            const step = steps[currentStep];
+            
+            step.fields.forEach(field => {
+                if (field.type === 'checkbox') {
+                    const checkboxes = document.querySelectorAll(`[id^="${field.name}_"]`);
+                    const values = [];
+                    checkboxes.forEach(cb => {
+                        if (cb.checked) values.push(cb.value);
+                    });
+                    formData[field.name] = values;
+                } else if (field.type === 'radio') {
+                    const selected = document.querySelector(`[name="${field.name}"]:checked`);
+                    if (selected) formData[field.name] = selected.value;
+                } else {
+                    const element = document.getElementById(field.name);
+                    if (element) formData[field.name] = element.value;
+                }
+            });
+        }
+
+        function validateStep() {
+            const steps = intakeType === 'mentor' ? mentorSteps : menteeSteps;
+            const step = steps[currentStep];
+            let isValid = true;
+            
+            step.fields.forEach(field => {
+                if (field.required) {
+                    const value = formData[field.name];
+                    if (!value || (Array.isArray(value) && value.length === 0)) {
+                        isValid = false;
+                        // Could add visual error indicators here
+                    }
+                }
+            });
+            
+            return isValid;
+        }
+
+        function nextStep() {
+            saveStepData();
+            
+            if (!validateStep()) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const steps = intakeType === 'mentor' ? mentorSteps : menteeSteps;
+            
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                renderStep();
+            } else {
+                submitForm();
+            }
+        }
+
+        function previousStep() {
+            saveStepData();
+            if (currentStep > 0) {
+                currentStep--;
+                renderStep();
+            }
+        }
+
+        function submitForm() {
+            // Show loading state
+            document.getElementById('nextBtn').innerHTML = '<span class="spinner"></span>';
+            document.getElementById('nextBtn').disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Generate mock matches for mentees
+                if (intakeType === 'mentee') {
+                    generateMatches();
+                }
+                showView('success');
+            }, 2000);
+        }
+
+        function generateMatches() {
+            const matches = [
+                {
+                    name: 'Sarah M.',
+                    score: 92,
+                    journey: 'TNBC survivor, 3 years',
+                    strengths: ['Similar diagnosis', 'Rural experience', 'Parent'],
+                    recommended: true
+                },
+                {
+                    name: 'Maria R.',
+                    score: 85,
+                    journey: 'ER+ survivor, 5 years',
+                    strengths: ['Spanish speaker', 'Financial navigation', 'Faith support'],
+                    recommended: false
+                }
+            ];
+            
+            let html = '<h3 style="margin-bottom: 1rem;">Suggested Matches</h3>';
+            
+            matches.forEach(match => {
+                html += `
+                    <div class="match-card ${match.recommended ? 'recommended' : ''}">
+                        <div class="match-header">
+                            <div class="match-name">${match.name}</div>
+                            <div class="match-score">${match.score}% Match</div>
+                        </div>
+                        <div class="match-details">${match.journey}</div>
+                        <div class="match-tags">
+                            ${match.strengths.map(s => `<span class="tag">${s}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('matchSuggestions').innerHTML = html;
+        }
+
+        // Language Support
+        function changeLanguage(lang) {
+            // This would connect to your translation system
+            console.log('Changing language to:', lang);
+            // For now, just alert
+            if (lang !== 'en') {
+                alert('Translation coming soon! Por favor, contacte (413) 298-2116 para apoyo en español.');
+            }
+        }
+
+        // PWA Installation
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Show install prompt after 30 seconds
+            setTimeout(() => {
+                document.getElementById('installPrompt').classList.add('show');
+            }, 30000);
+        });
+
+        function installApp() {
+            hideInstallPrompt();
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        function hideInstallPrompt() {
+            document.getElementById('installPrompt').classList.remove('show');
+        }
+
+        // Service Worker Registration (for PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4gc2VsZi5za2lwV2FpdGluZygpKTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdhY3RpdmF0ZScsIGV2ZW50ID0+IGV2ZW50LndhaXRVbnRpbChjbGllbnRzLmNsYWltKCkpKTs=')
+                    .then(registration => console.log('SW registered'))
+                    .catch(error => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
